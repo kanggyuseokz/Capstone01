@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+// useNavigate를 import 목록에서 제거하고 Link만 남깁니다.
+import { Link } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
 
 const LoginPage = () => {
@@ -7,15 +8,17 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const { login } = useContext(AuthContext);
-  const navigate = useNavigate();
+  // useNavigate 훅을 사용하지 않으므로 관련 코드를 삭제합니다.
+  // const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
     const result = await login(username, password);
-    if (result.success) {
-      navigate('/'); // 로그인 성공 시 대시보드로 이동
-    } else {
+    
+    // 성공했을 때 navigate()를 호출하는 부분을 삭제합니다.
+    // 실패했을 때만 에러 메시지를 설정합니다.
+    if (!result.success) {
       setError(result.error || '로그인에 실패했습니다.');
     }
   };
@@ -25,6 +28,7 @@ const LoginPage = () => {
       <div className="card bg-secondary p-4 shadow" style={{ width: '300px', borderRadius: '15px' }}>
         <h2 className="text-center mb-4 text-primary fw-bold">🔐 보안 관리자 로그인</h2>
         <form onSubmit={handleLogin}>
+          {/* ... input 필드들은 그대로 ... */}
           <div className="mb-3">
             <input
               type="text"
